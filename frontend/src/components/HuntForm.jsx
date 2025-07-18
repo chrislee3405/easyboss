@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import axiosInstance from '../axiosConfig';
 
-const TaskForm = ({ tasks, setTasks, editingTask, setEditingTask }) => {
+const HuntForm = ({ }) => {
   const { user } = useAuth();
   const [selectedBoss, setSelectedBoss] = useState(null);
   const [formData, setFormData] = useState({ channel: '', fullChannel: false, });
@@ -26,12 +26,12 @@ const TaskForm = ({ tasks, setTasks, editingTask, setEditingTask }) => {
     };
 
     try {
-      const response = await axiosInstance.post('/api/hunt', huntData, {
+      const response = await axiosInstance.post('/api/hunts', huntData, {
         headers: { Authorization: `Bearer ${user.token}` },
       });
-
       // Reset form after submission
       setFormData({ channel: '', fullChannel: false });
+      window.location.reload();
     } catch (error) {
       alert('Failed to save hunt.');
     }
@@ -42,29 +42,32 @@ const TaskForm = ({ tasks, setTasks, editingTask, setEditingTask }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-6 shadow-md rounded mb-6">
+<form onSubmit={handleSubmit} className="bg-white p-6 shadow-md rounded mb-6">
+  <div className="flex items-center space-x-4">
+    <input
+      type="text"
+      placeholder="Channel"
+      value={formData.channel}
+      onChange={(e) => setFormData({ ...formData, channel: e.target.value })}
+      className="flex-1 p-2 border rounded"
+    />
+
+    <label className="flex items-center space-x-2">
       <input
-        type="text"
-        placeholder="Channel"
-        value={formData.channel}
-        onChange={(e) => setFormData({ ...formData, channel: e.target.value })}
-        className="w-full mb-4 p-2 border rounded"
+        type="checkbox"
+        checked={formData.fullChannel}
+        onChange={handleCheckboxChange}
       />
+      <span>Full Channel</span>
+    </label>
 
-      <label className="flex items-center space-x-2 mb-4">
-        <input
-          type="checkbox"
-          checked={formData.fullChannel}
-          onChange={handleCheckboxChange}
-        />
-        <span>Full Channel</span>
-      </label>
+    <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
+      Record Hunt
+    </button>
+  </div>
+</form>
 
-      <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">
-        Record Hunt
-      </button>
-    </form>
   );
 };
 
-export default TaskForm;
+export default HuntForm;

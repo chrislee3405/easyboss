@@ -12,14 +12,14 @@ const Navbar = () => {
 
   return (
     <nav className="bg-blue-600 text-white p-4 flex justify-between items-center">
-      <Link to="/" className="text-2xl font-bold">Your apps name</Link>
+      <Link to="/" className="text-2xl font-bold">EasyBoss</Link>
       <div>
         {user ? (
           <>
-            <Link to="/bosses" className="mr-4">boss</Link>
-            <Link to="/hunt" className="mr-4">hunt</Link>
-            <Link to="/tasks" className="mr-4">CRUD</Link>
-            <Link to="/profile" className="mr-4">Profile</Link>
+            <Link to="/bosses" className="mr-4">Boss</Link>
+            <Link to="/hunt" className="mr-4">Hunt</Link>
+            {/* <Link to="/tasks" className="mr-4">CRUD</Link>
+            <Link to="/profile" className="mr-4">Profile</Link> */}
             <button
               onClick={handleLogout}
               className="bg-red-500 px-4 py-2 rounded hover:bg-red-700"
@@ -30,12 +30,12 @@ const Navbar = () => {
         ) : (
           <>
             <Link to="/login" className="mr-4">Login</Link>
-            <Link
+            {/* <Link
               to="/register"
               className="bg-green-500 px-4 py-2 rounded hover:bg-green-700"
             >
               Register
-            </Link>
+            </Link> */}
           </>
         )}
       </div>

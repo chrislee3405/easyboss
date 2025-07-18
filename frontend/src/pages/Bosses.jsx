@@ -24,7 +24,7 @@ const Bosses = () => {
 
   return (
     <div className="container mx-auto p-6">
-      <BossList bosses={bosses} setBosses={setBosses} />
+      <BossList bosses={bosses} />
     </div>
   );
 };
