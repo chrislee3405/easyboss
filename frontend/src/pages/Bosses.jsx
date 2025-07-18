@@ -9,13 +9,13 @@ const Bosses = () => {
 
   useEffect(() => {
     const fetchBosses = async () => {
+      if (!user || !user.token) return; // Wait until user is loaded
+
       try {
-        const response = await axiosInstance.get('/api/bosses', {
-          headers: { Authorization: `Bearer ${user.token}` },
-        });
+        const response = await axiosInstance.get('/api/bosses', {headers: { Authorization: `Bearer ${user.token}` },});
         setBosses(response.data);
       } catch (error) {
-        alert('Failed to fetch bosss.');
+        alert('Failed to fetch bosses.');
       }
     };
 
@@ -24,7 +24,7 @@ const Bosses = () => {
 
   return (
     <div className="container mx-auto p-6">
-      <BossList bosses={bosses} setBosses={setBosses}  />
+      <BossList bosses={bosses} setBosses={setBosses} />
     </div>
   );
 };
