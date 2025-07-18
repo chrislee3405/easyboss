@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import HuntCurrentBossCard from '../components/HuntCurrentBossCard';
+import HuntForm from '../components/HuntForm';
 
 const Hunt = () => {
   const { user } = useAuth();
@@ -16,15 +18,10 @@ const Hunt = () => {
   return (
     <div className="container mx-auto p-6">
       {selectedBoss ? (
-        <div>
-          <h2 className="text-xl font-bold mb-4">Selected Boss: {selectedBoss.name}</h2>
-          <p>Area: {selectedBoss.area}</p>
-          <p>Level: {selectedBoss.level}</p>
-          <p>ID: {selectedBoss._id}</p>
-        </div>
-      ) : (
-        <p>No boss selected.</p>
-      )}
+        <HuntCurrentBossCard boss={selectedBoss} />) : (
+        <p>No boss selected.</p>)}
+        <HuntForm/>
+      
     </div>
   );
 };
