@@ -8,7 +8,7 @@ const HuntCurrentBossCard = ({ boss, onRemoveBoss }) => {
         onClick={onRemoveBoss}
         className="absolute top-3 right-3 bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600 text-sm"
       >
-        Remove selected boss
+        Remove
       </button>
 
       <h2 className="text-2xl font-bold mb-2">{boss.name}</h2>
