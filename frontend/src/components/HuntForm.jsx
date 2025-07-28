@@ -62,14 +62,14 @@ return (
         onChange={handleChange}
         className="w-6 h-6 accent-blue-600 cursor-pointer" // ✅ Larger checkbox
       />
-      <span className="text-lg">Full Channel</span> {/* ✅ Bigger label text */}
+      <span className="text-lg">Full</span> {/* ✅ Bigger label text */}
     </label>
 
     <button
       type="submit"
       className="bg-blue-600 text-white px-4 py-2 rounded"
     >
-      Record Hunt
+      Hunted
     </button>
   </div>
     <span className="block mb-2 font-semibold">Select Channel:</span>
