@@ -40,6 +40,21 @@ const HuntList = ({ hunts, setHunts }) => {
     }
   };
 
+    const handleDeleteHunt = async (huntId) => {
+    if (!user || !user.token) return;
+
+    try {
+      await axiosInstance.delete(`/api/hunts/${huntId}`, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+
+      // ✅ remove the deleted hunt from state
+      setHunts((prev) => prev.filter((h) => h._id !== huntId));
+    } catch (error) {
+      alert('Failed to delete hunt.');
+    }
+  };
+
 
 
   const getBossRespawnMin = (bossId) => {
@@ -54,7 +69,13 @@ const HuntList = ({ hunts, setHunts }) => {
 
 
 const renderHuntCard = (hunt) => (
-  <HuntCard key={hunt._id} hunt={hunt} bosses={bosses} resetHuntTime={resetHuntTime} />
+  <HuntCard
+    key={hunt._id}
+    hunt={hunt}
+    bosses={bosses}
+    resetHuntTime={resetHuntTime}
+    onDeleteHunt={handleDeleteHunt} // ✅ pass delete handler
+  />
 );
 
   
