@@ -45,11 +45,40 @@ const updateHunt = async (req, res) => {
 
 const deleteAllHunts = async (req, res) => {
   try {
-    await Hunt.deleteMany({ userId: req.user.id });
-    res.json({ message: 'All hunts deleted successfully.' });
+    const bossId = req.query.bossId; // Get bossId from query parameter
+    const filter = { userId: req.user.id };
+
+    // If bossId is provided, filter by bossId as well
+    if (bossId) {
+      filter.bossId = bossId;
+    }
+
+    await Hunt.deleteMany(filter);
+
+    res.status(200).json({ message: bossId 
+      ? `All hunts for boss ${bossId} deleted.` 
+      : 'All hunts deleted.' 
+    });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: 'Failed to delete hunts.' });
   }
 };
 
-module.exports = { getHunts, addHunt, updateHunt, deleteAllHunts };
+
+const deleteHuntById = async (req, res) => {
+  try {
+    const huntId = req.params.id;
+    const deletedHunt = await Hunt.findByIdAndDelete(huntId);
+
+    if (!deletedHunt) {
+      return res.status(404).json({ message: 'Hunt not found' });
+    }
+
+    res.status(200).json({ message: 'Hunt deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to delete hunt' });
+  }
+};
+
+module.exports = { getHunts, addHunt, updateHunt, deleteAllHunts, deleteHuntById };

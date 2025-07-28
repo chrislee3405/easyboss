@@ -1,7 +1,7 @@
 // HuntCard.jsx
 import React from 'react';
 
-const HuntCard = ({ hunt, bosses, resetHuntTime }) => {
+const HuntCard = ({ hunt, bosses, resetHuntTime, onDeleteHunt }) => {
   const getBossRespawnMin = (bossId) => {
     const boss = bosses.find((b) => b._id === bossId);
     return boss ? boss.respawnMin : '0';
@@ -36,7 +36,7 @@ const HuntCard = ({ hunt, bosses, resetHuntTime }) => {
     return (
       <>
         {datePart}, <strong>{timePart}</strong>{' '}
-        <span className="text-sm text-gray-600">{timeZone}</span>
+        {/* <span className="text-sm text-gray-600">{timeZone}</span> */}
       </>
     );
   };
@@ -59,37 +59,44 @@ const HuntCard = ({ hunt, bosses, resetHuntTime }) => {
   }
 
   return (
-    <div className={`${bgColor} p-4 mb-4 rounded shadow`}>
-      <div className="flex items-center justify-between space-x-4">
-        {/* Channel name */}
-        <h2 className="font-bold text-2xl flex-shrink-0">{hunt.channel}</h2>
+<div className="flex items-center justify-between gap-4">
+  {/* Channel */}
+  <h2 className="font-bold text-2xl w-16 text-center">{hunt.channel}</h2>
 
-        {/* Right side: min respawn time and button */}
-        <div className="flex items-center space-x-4">
-          <p className="whitespace-nowrap">Respawn: {getMinRespawnTime(hunt)}</p>
-          {now > maxTime ? (
-            <button
-              onClick={() => resetHuntTime(hunt)}
-              className="bg-red-600 text-white px-4 py-2 rounded"
-            >
-              Gone
-            </button>
-          ) : (
-            <button
-              onClick={() => resetHuntTime(hunt)}
-              disabled={isDisabled}
-              className={`px-4 py-2 rounded text-white ${
-                isDisabled
-                  ? 'bg-gray-400 cursor-not-allowed'
-                  : 'bg-green-500 hover:bg-green-600'
-              }`}
-            >
-              Hunt
-            </button>
-          )}
-        </div>
-      </div>
-    </div>
+  {/* Respawn Time */}
+  <p className="whitespace-nowrap flex-1 text-center">{getMinRespawnTime(hunt)}</p>
+
+  {/* Action Buttons */}
+  <div className="flex gap-2">
+    {now > maxTime ? (
+      <button
+        onClick={() => resetHuntTime(hunt)}
+        className="bg-red-600 text-white px-4 py-2 rounded"
+      >
+        Gone
+      </button>
+    ) : (
+      <button
+        onClick={() => resetHuntTime(hunt)}
+        disabled={isDisabled}
+        className={`px-4 py-2 rounded text-white ${
+          isDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'
+        }`}
+      >
+        Hunt
+      </button>
+    )}
+
+    {/* Delete Button */}
+    <button
+      onClick={() => onDeleteHunt(hunt._id)}
+      className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600"
+    >
+      Delete
+    </button>
+  </div>
+</div>
+
   );
 };
 
